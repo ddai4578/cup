@@ -7,7 +7,6 @@ config_file="config.cmake"
 
 gtest_compile_type=`sed -n 2p ${config_file} | cut -d "\"" -f2`
 
-if [ ! -d "${gtest_lib_name}" ]; then
     echo "gtest will be installed, pls wait few minites"
 
     if [ -d "install"  ]; then
@@ -16,11 +15,7 @@ if [ ! -d "${gtest_lib_name}" ]; then
 
     mkdir install
     cd install
-    git clone http://gitlab.zte.com.cn/cpp-lib/gtest.git
-else
-    echo "gtest have been installed!!"
-    exit 0
-fi
+    git clone git@github.com:ddai4578/gtest.git
 
 echo "CMAKE_MINIMUM_REQUIRED(VERSION 2.8)" >> CMakeLists.txt
 
@@ -42,12 +37,18 @@ cmake --build .
 cd ../..
 echo "$PWD"
 echo "install gtest libs"
+
+if [ -d 3th/ ]; then
+    rm -rf 3th/
+fi
+mkdir -p 3th/lib/
+mkdir 3th/include/
 cp install/build/gtest/libgtest.a 3th/lib/
 
 if [ -d ${gtest_include_url} ]; then
     rm -rf ${gtest_include_url}
 fi
-cp -r install/gtest/include/gtest/ 3th/include/
+cp -r install/gtest/include/gtest/ 3th/include/gtest/
 
 rm -rf install
 
