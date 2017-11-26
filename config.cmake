@@ -1,2 +1,2 @@
-set (proj_name "cup")
+set (proj_name "master")
 set (c_type "64Bits")
